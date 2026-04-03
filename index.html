@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+p{
+border: solid black;
+color: white;
+font-size: 36px;
+}
+body{
+background-color: grey;
+}
+button{
+color: cyan;
+background-color: black;
+height: 50px;
+}
+#b{
+width:150px; 
+}
+#j{
+width:305px;
+}
+.jk{
+margin-left: 350px;
+}
+</style>
+<h1>Indovina il numero!</h1>
+<p>Premi il bottone corrispondente al numero che pensi sia uscito (da 0 a 9)</p>
+<p></p>
+<p id="streak">Streak</p>
+<button onclick="set_number(7)" id="b" class="jk">7</button>
+<button onclick="set_number(8)" id="b">8</button>
+<button onclick="set_number(9)" id="b">9</button><br>
+<button onclick="set_number(4)" id="b" class="jk">4</button>
+<button onclick="set_number(5)" id="b">5</button>
+<button onclick="set_number(6)" id="b">6</button><br>
+<button onclick="set_number(1)" id="b" class="jk">1</button>
+<button onclick="set_number(2)" id="b">2</button>
+<button onclick="set_number(3)" id="b">3</button><br>
+<button onclick="set_number(0)" id="b" class="jk">0</button>
+<button onclick="check()" id="j">Invio</button><br><br>
+<button onclick="restart()" id="nb" class="jk">Ricomincia</button>
+<button ondblclick="hint()" id="Bindizio">Indizio(premere 2 volte)</button>
+<button ondblclick="mostra()">Mostra numero(premere 2 volte)</button>
+<script>
+const p=document.querySelectorAll("p")[0];
+const p2=document.querySelectorAll("p")[1]
+const p3=document.getElementById("streak")
+const button7 = document.querySelectorAll("button")[0]
+const button8 = document.querySelectorAll("button")[1]
+const button9 = document.querySelectorAll("button")[2]
+const button4 = document.querySelectorAll("button")[3]
+const button5 = document.querySelectorAll("button")[4]
+const button6 = document.querySelectorAll("button")[5]
+const button1 = document.querySelectorAll("button")[6]
+const button2 = document.querySelectorAll("button")[7]
+const button3 = document.querySelectorAll("button")[8]
+const button0 = document.querySelectorAll("button")[9]
+const buttonC = document.querySelectorAll("button")[10]
+const buttonI = document.querySelectorAll("button")[12]
+const buttonM = document.querySelectorAll("button")[13]
+array_buttons = [button0,button1,button2,button3,button4,button5,button6,button7,button8,button9,buttonC,buttonI,buttonM]
+num=0
+numM=0
+streaks_array=[0]
+p3.innerHTML = `Streak ${num}    streak migliore ${Math.max(streaks_array)}`
+function getRandomInt(){
+    return Math.floor(Math.random(9)*10);
+    }
+let random_number = getRandomInt();
+n=0;
+function set_number(number_to_set){
+    p2.innerHTML = number_to_set; 
+    n+=number_to_set;
+    }
+function disable(){
+    for (i of array_buttons){
+    i.disabled = "true"
+    }
+}
+function check(){
+    if (n==random_number){
+        p.innerHTML = "Hai indovinato!";
+        disable()
+        num+=1
+        streaks_array.push(num)
+        numM=Math.max(...streaks_array)
+    }
+    else{
+        p.innerHTML = "Non hai indovinato,riprova";
+        n=0;
+        num = 0 
+        }
+        p3.innerHTML = `Streak ${num}    streak migliore ${numM}`
+}
+function enable(){
+    for (i of array_buttons){
+        i.disabled = false
+        }
+}
+function restart(){
+    p.innerHTML = ""
+    p2.innerHTML = ""
+    random_number = getRandomInt()
+    n=0
+    enable()
+    document.getElementById("Bindizio").disabled=false
+}
+function hint(){
+    n=parseInt(p2.innerHTML)
+    if (n<random_number){
+        p2.innerHTML = "Seleziona un numero maggiore"
+    }
+    else if (n>random_number){
+        p2.innerHTML = "Seleziona un numero minore"
+    }
+    document.getElementById("Bindizio").disabled=true
+}
+function mostra(){
+    p2.innerHTML = random_number;
+    for(i of array_buttons){
+        i.disabled=true
+        }
+}
+</script>
+</body>
+</html>
